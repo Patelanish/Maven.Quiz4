@@ -4,22 +4,39 @@ package rocks.zipcode.quiz4.objectorientation.account;
  * @author leon on 27/12/2018.
  */
 public class BankAccount implements Transactable {
+
+    private Double balance;
+
+    public BankAccount(){
+        balance = 0.0;
+    }
+
+
     public void setBalance(Double val) {
+        this.balance = val;
     }
 
     @Override
     public void deposit(Double amountToIncreaseBy) {
-
+        if (amountToIncreaseBy < 0){
+            throw new IllegalArgumentException("Deposite can't go below negative amount.");
+        }
+        balance += amountToIncreaseBy;
     }
 
     @Override
     public void withdrawal(Double amountToDecreaseBy) {
-       // return getBalance(amountToDecreaseBy);
-
+        if (amountToDecreaseBy < 0){
+            throw new IllegalArgumentException("Can't withdraw negative amount.");
+        }
+        if (amountToDecreaseBy > balance){
+            throw new IllegalArgumentException("Can't take out money more than balance in the account");
+        }
+        balance = amountToDecreaseBy;
     }
 
     @Override
     public Double getBalance() {
-        return null;
+        return balance;
     }
 }
